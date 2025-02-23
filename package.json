@@ -4,8 +4,7 @@
   "description": "Aprendendo a criar um projeto real do zero pelo curso do Felipe deschamps",
   "main": " ",
   "scripts": {
-    "dev": "trap 'npm run postdev' INT TERM HUP; npm run services:up && npm run services:wait:database && npm run migrations:up && next dev",
-    "postdev": "npm run services:stop",
+    "dev": "npm run services:up && npm run services:wait:database && npm run migrations:up && next dev",
     "test": "npm run services:up && concurrently -n next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --verbose\"",
     "posttest": "npm run services:stop",
     "test:watch": "jest --watchAll --runInBand --verbose",
@@ -18,7 +17,7 @@
     "lint:prettier:check": "prettier --check .",
     "lint:prettier:fix": "prettier --write .",
     "lint:eslint:check": "next lint --dir .",
-    "prepare": "husky && husky install",
+    "prepare": "husky",
     "commit": "npm run lint:prettier:fix; cz"
   },
   "author": "",
