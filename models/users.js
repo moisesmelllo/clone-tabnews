@@ -107,8 +107,6 @@ async function update(username, userInputValues) {
     return results.rows[0];
   }
 
-  console.log(updatedUser);
-
   return updatedUser;
 }
 
