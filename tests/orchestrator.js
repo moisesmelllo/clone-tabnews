@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 
 import database from "infra/database.js";
 import migrator from "models/migrator.js";
-import user from "models/users.js";
+import user from "models/user.js";
 
 async function waitForAllServices() {
   await waitForWebServer();
