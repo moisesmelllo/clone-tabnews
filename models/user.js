@@ -99,7 +99,7 @@ async function create(userInputValues) {
   await validateUniqueUsername(userInputValues.username);
   await validateUniqueEmail(userInputValues.email);
   await hashPasswordInObject(userInputValues);
-  injectDefaultFeaturesInObject(userInputValues)
+  injectDefaultFeaturesInObject(userInputValues);
 
   const newUser = await runInsertQuery(userInputValues);
   return newUser;
@@ -118,7 +118,7 @@ async function create(userInputValues) {
         userInputValues.username,
         userInputValues.email,
         userInputValues.password,
-        userInputValues.features
+        userInputValues.features,
       ],
     });
 
@@ -126,7 +126,7 @@ async function create(userInputValues) {
   }
 
   function injectDefaultFeaturesInObject(userInputValues) {
-    userInputValues.features = ["read:activation_token"]
+    userInputValues.features = ["read:activation_token"];
   }
 }
 
