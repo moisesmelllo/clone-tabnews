@@ -1,6 +1,7 @@
 import * as cookie from "cookie";
 import session from "models/session.js";
 import user from "models/user.js";
+import authorization from "models/authorization.js";
 
 import {
   InternalServerError,
@@ -17,7 +18,11 @@ function onNoMatchHandler(request, response) {
 }
 
 function onErrorHandler(error, request, response) {
-  if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
+  if (
+    error instanceof ValidationError ||
+    error instanceof NotFoundError ||
+    error instanceof ForbiddenError
+  ) {
     return response.status(error.statusCode).json(error);
   }
 
@@ -58,13 +63,13 @@ async function clearSessionCookie(response) {
 }
 
 async function injectAnonymousOrUser(request, response, next) {
-  if(request.session?.session_id) {
-    await injectAuthenticatedUser(request)
+  if (request.session?.session_id) {
+    await injectAuthenticatedUser(request);
     return next();
-  } 
-  
-  injectAnonymousUser(request)
-  return next()
+  }
+
+  injectAnonymousUser(request);
+  return next();
 }
 
 async function injectAuthenticatedUser(request) {
@@ -74,36 +79,33 @@ async function injectAuthenticatedUser(request) {
 
   request.context = {
     ...request.context,
-    user: userObject
-  }
+    user: userObject,
+  };
 }
 
 function injectAnonymousUser(request) {
   const anonymousUserObject = {
-    features: ["read:activation_token", "create:session", "create:user"]
-  }
+    features: ["read:activation_token", "create:session", "create:user"],
+  };
 
   request.context = {
     ...request.context,
     user: anonymousUserObject,
-  }
+  };
 }
 
 function canRequest(feature) {
   return function canRequestmiddleware(request, response, next) {
     const userTryngToRequest = request.context.user;
 
-    console.log(userTryngToRequest)
-    console.log(feature)
-    
-    if (userTryngToRequest.features.includes(feature)) {
+    if (authorization.can(userTryngToRequest, feature)) {
       return next();
     }
 
     throw new ForbiddenError({
       message: "Você não possui permissão para executar esta ação",
-      action: `Verifique se o seu usuário possui a feature "${feature}"`
-    })
+      action: `Verifique se o seu usuário possui a feature "${feature}"`,
+    });
   };
 }
 
