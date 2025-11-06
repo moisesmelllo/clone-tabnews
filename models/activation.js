@@ -2,8 +2,7 @@ import email from "infra/email";
 import database from "infra/database.js";
 import webserver from "infra/webserver.js";
 import { NotFoundError } from "infra/errors";
-import user from "models/user.js"
-
+import user from "models/user.js";
 
 const EXPIRATION_IN_MILLISECONDS = 60 * 15 * 1000; // 15 minutes
 
@@ -59,7 +58,6 @@ async function create(userId) {
       values: [userId, expiresAt],
     });
 
-    console.log("############################################", results);
     return results.rows[0];
   }
 }
@@ -95,7 +93,7 @@ async function markTokenAsUsed(activationTokenId) {
         RETURNING
           *
       `,
-        values: [activationTokenId]
+      values: [activationTokenId],
     });
 
     return results.rows[0];

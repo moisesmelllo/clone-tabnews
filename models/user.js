@@ -242,7 +242,7 @@ async function setFeatures(userId, features) {
         RETURNING
           *
       ;`,
-      values: [userId, features]
+      values: [userId, features],
     });
 
     return results.rows[0];
