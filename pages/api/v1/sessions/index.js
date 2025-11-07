@@ -25,8 +25,8 @@ async function postHandler(request, response) {
   if (!authorization.can(authenticatedUser, "create:session")) {
     throw new ForbiddenError({
       message: "Você não possui permissão para fazer login.",
-      action: "Contate o suporte caso você acredite que isto seja um erro."
-    })
+      action: "Contate o suporte caso você acredite que isto seja um erro.",
+    });
   }
 
   const newSession = await session.create(authenticatedUser.id);

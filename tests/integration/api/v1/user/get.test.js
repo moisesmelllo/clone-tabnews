@@ -16,6 +16,8 @@ describe("GET /api/v1/user", () => {
         username: "UserWithValidSession",
       });
 
+      const activatedUser = await orchestrator.activateUser(createdUser);
+
       const sessionObject = await orchestrator.createSession(createdUser.id);
 
       const response = await fetch("http://localhost:3000/api/v1/user", {
@@ -23,6 +25,7 @@ describe("GET /api/v1/user", () => {
           Cookie: `session_id=${sessionObject.token}`,
         },
       });
+      
 
       expect(response.status).toBe(200);
 
@@ -37,10 +40,10 @@ describe("GET /api/v1/user", () => {
         id: createdUser.id,
         username: "UserWithValidSession",
         email: createdUser.email,
-        features: ["read:activation_token"],
+        features: ["create:session", "read:session"],
         password: createdUser.password,
         created_at: createdUser.created_at.toISOString(),
-        updated_at: createdUser.updated_at.toISOString(),
+        updated_at: activatedUser.updated_at.toISOString(),
       });
 
       expect(uuidVersion(responseBody.id)).toBe(4);
@@ -163,6 +166,9 @@ describe("GET /api/v1/user", () => {
         username: "UserWithnearlyexpiredSession",
       });
 
+      const activatedUser = await orchestrator.activateUser(createdUser);
+
+
       const sessionObject = await orchestrator.createSession(createdUser.id);
 
       jest.useRealTimers();
@@ -181,10 +187,10 @@ describe("GET /api/v1/user", () => {
         id: createdUser.id,
         username: "UserWithnearlyexpiredSession",
         email: createdUser.email,
-        features: ["read:activation_token"],
+        features: ["create:session", "read:session"],
         password: createdUser.password,
         created_at: createdUser.created_at.toISOString(),
-        updated_at: createdUser.updated_at.toISOString(),
+        updated_at: activatedUser.updated_at.toISOString(),
       });
     });
   });

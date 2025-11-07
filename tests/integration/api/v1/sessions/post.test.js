@@ -2,8 +2,6 @@ import { version as uuidVersion } from "uuid";
 import setCookieParser from "set-cookie-parser";
 import orchestrator from "tests/orchestrator.js";
 import session from "models/session";
-import webserver from "infra/webserver";
-import activation from "models/activation";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -102,7 +100,7 @@ describe("POST /api/v1/sessions", () => {
         password: "tudocorreto",
       });
 
-      await orchestrator.activateUser(createdUser)
+      await orchestrator.activateUser(createdUser);
 
       const response = await fetch("http://localhost:3000/api/v1/sessions", {
         method: "POST",

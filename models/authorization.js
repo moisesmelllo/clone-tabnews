@@ -8,7 +8,7 @@ function can(user, feature) {
 }
 
 const authorization = {
-  can
-}
+  can,
+};
 
-export default authorization
+export default authorization;

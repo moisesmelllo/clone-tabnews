@@ -24,7 +24,7 @@ describe("GET /api/v1/users/[username]", () => {
 
       const response2Body = await response2.json();
 
-      console.log(response2Body)
+      console.log(response2Body);
 
       expect(response2Body).toEqual({
         id: response2Body.id,
