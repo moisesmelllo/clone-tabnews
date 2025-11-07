@@ -24,10 +24,13 @@ describe("GET /api/v1/users/[username]", () => {
 
       const response2Body = await response2.json();
 
+      console.log(response2Body);
+
       expect(response2Body).toEqual({
         id: response2Body.id,
         username: "MesmoCase",
         email: "mesmo.case@test.com",
+        features: ["read:activation_token"],
         password: response2Body.password,
         created_at: response2Body.created_at,
         updated_at: response2Body.updated_at,
@@ -57,6 +60,7 @@ describe("GET /api/v1/users/[username]", () => {
         id: response2Body.id,
         username: "CaseDiferente",
         email: "case.diferente@test.com",
+        features: ["read:activation_token"],
         password: response2Body.password,
         created_at: response2Body.created_at,
         updated_at: response2Body.updated_at,
