@@ -25,7 +25,6 @@ describe("GET /api/v1/user", () => {
           Cookie: `session_id=${sessionObject.token}`,
         },
       });
-      
 
       expect(response.status).toBe(200);
 
@@ -167,7 +166,6 @@ describe("GET /api/v1/user", () => {
       });
 
       const activatedUser = await orchestrator.activateUser(createdUser);
-
 
       const sessionObject = await orchestrator.createSession(createdUser.id);
 

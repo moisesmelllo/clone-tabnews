@@ -110,13 +110,13 @@ describe("Use case: Registration Flow (all successful)", () => {
   test("Get user information", async () => {
     const userResponse = await fetch("http://localhost:3000/api/v1/user", {
       headers: {
-        Cookie: `session_id=${createSessionResponseBody.token}`, 
-      }
-    })
+        Cookie: `session_id=${createSessionResponseBody.token}`,
+      },
+    });
 
-    expect(userResponse.status).toBe(200)
+    expect(userResponse.status).toBe(200);
 
-    const userResponseBody = await userResponse.json()
+    const userResponseBody = await userResponse.json();
 
     expect(userResponseBody.id).toBe(createUserResponseBody.id);
   });
